@@ -42,12 +42,6 @@ set_default() {
 RPCUSER=$(set_default "$RPCUSER" "devuser")
 RPCPASS=$(set_default "$RPCPASS" "devpass")
 DEBUG=$(set_default "$DEBUG" "info")
-NETWORK=$(set_default "$NETWORK" "simnet")
-
-PARAMS=""
-if [ "$NETWORK" != "mainnet" ]; then
-   PARAMS=$(echo --$NETWORK)
-fi
 
 PARAMS=$(echo $PARAMS \
     "--debuglevel=$DEBUG" \
@@ -60,11 +54,6 @@ PARAMS=$(echo $PARAMS \
     "--rpclisten=0.0.0.0" \
     "--txindex"
 )
-
-# Set the mining flag only if address is non empty.
-if [[ -n "$MINING_ADDRESS" ]]; then
-    PARAMS="$PARAMS --miningaddr=$MINING_ADDRESS"
-fi
 
 # Add user parameters to command.
 PARAMS="$PARAMS $@"

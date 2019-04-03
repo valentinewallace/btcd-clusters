@@ -17,15 +17,6 @@ FROM alpine as final
 # Expose mainnet ports (server, rpc)
 EXPOSE 8333 8334
 
-# Expose testnet ports (server, rpc)
-EXPOSE 18333 18334
-
-# Expose simnet ports (server, rpc)
-EXPOSE 18555 18556
-
-# Expose segnet ports (server, rpc)
-EXPOSE 28901 28902
-
 # Copy the compiled binaries from the builder image.
 COPY --from=builder /go/bin/addblock /bin/
 COPY --from=builder /go/bin/btcctl /bin/
@@ -54,3 +45,5 @@ RUN apk add --no-cache \
 # Otherwise manually generated certificate will be overridden with shared
 # mounted volume! For more info read dockerfile "VOLUME" documentation.
 VOLUME ["/rpc"]
+
+CMD ["./start-btcd.sh"]

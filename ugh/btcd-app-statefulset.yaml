@@ -17,7 +17,7 @@ spec:
       - name: btcd-app-cluster
         image: gcr.io/lightning-175803/btcd-nodes:v9
         ports:
-        - containerPort: 18333
+        - containerPort: 8333
           name: btcd-sset
         volumeMounts:
         - name: btcd-app-cluster-volume

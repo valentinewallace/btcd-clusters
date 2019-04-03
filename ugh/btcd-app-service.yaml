@@ -2,17 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   # Unique key of the Service instance
-  name: btcd-app-testnet-cluster-service
+  name: btcd-app-mainnet-cluster-service
   labels:
-    app: btcd-app-testnet-cluster
+    app: btcd-app-mainnet-cluster
 spec:
   ports:
     # Accept traffic sent to port 18333
-    - name: btcd-testnet-sset
-      port: 18333
-      targetPort: 18333
+    - name: btcd-mainnet-sset
+      port: 8333
+      targetPort: 8333
   selector:
     # Loadbalance traffic across Pods matching
     # this label selector
-    app: btcd-app-testnet-cluster
+    app: btcd-app-mainnet-cluster
   type: LoadBalancer    

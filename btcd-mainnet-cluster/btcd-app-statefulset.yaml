@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: btcd-sset
+spec:
+  serviceName: "btcd-app-cluster-service"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: btcd-app-cluster
+  template:
+    metadata:
+      labels:
+        app: btcd-app-cluster
+    spec:
+      containers:
+      - name: btcd-app-cluster
+        image: gcr.io/lightning-175803/btcd-nodes:v9
+        ports:
+        - containerPort: 8333
+          name: btcd-sset
+        volumeMounts:
+        - name: btcd-app-cluster-volume
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: btcd-app-cluster-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 60Gi

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: btcd-app-mainnet-cluster
-        image: vallywal/btcd-mainnet-cluster:v1
+        image: vallywal/btcd-mainnet-cluster:v3
         ports:
         - containerPort: 8333
           name: btcd-sset

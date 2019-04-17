@@ -52,7 +52,7 @@ PARAMS=$(echo $PARAMS \
     "--rpccert=/rpc/rpc.cert" \
     "--rpckey=/rpc/rpc.key" \
     "--rpclisten=0.0.0.0" \
-    "--txindex"
+    "--txindex" \
     "--agentblacklist=Cash,ABC"
 )
 

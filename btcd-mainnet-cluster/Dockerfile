@@ -8,7 +8,7 @@ RUN apk add --no-cache git gcc musl-dev
 WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 
 # Grab and install the latest version of of btcd and all related dependencies.
-RUN git clone https://github.com/btcsuite/btcd.git . \
+RUN git clone https://github.com/btcsuite/btcd.git \
     && cd btcd \
     && git remote add conner https://github.com/cfromknecht/btcd.git \
     && git fetch conner stall-fixes \

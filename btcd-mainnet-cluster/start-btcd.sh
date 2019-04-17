@@ -53,6 +53,7 @@ PARAMS=$(echo $PARAMS \
     "--rpckey=/rpc/rpc.key" \
     "--rpclisten=0.0.0.0" \
     "--txindex"
+    "--agentblacklist=Cash,ABC"
 )
 
 # Add user parameters to command.

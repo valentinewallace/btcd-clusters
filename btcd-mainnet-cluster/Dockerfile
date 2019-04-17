@@ -9,6 +9,10 @@ WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 
 # Grab and install the latest version of of btcd and all related dependencies.
 RUN git clone https://github.com/btcsuite/btcd.git . \
+    && cd btcd \
+    && git remote add conner https://github.com/cfromknecht/btcd.git \
+    && git fetch conner stall-fixes \
+    && git checkout stall-fixes \
     &&  GO111MODULE=on go install -v . ./cmd/...
 
 # Start a new image

@@ -10,16 +10,16 @@ WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 # Grab and install the latest version of of btcd and all related dependencies.
 RUN git clone https://github.com/btcsuite/btcd.git \
     && cd btcd \
-    && git remote add conner https://github.com/cfromknecht/btcd.git \
-    && git fetch conner stall-fixes \
-    && git checkout stall-fixes \
+    && git remote add vmw https://github.com/valentinewallace/btcd.git \
+    && git fetch vmw btcd-mainnet-cluster \
+    && git checkout btcd-mainnet-cluster \
     && GO111MODULE=on go install -v . ./cmd/...
 
 # Start a new image
 FROM alpine as final
 
 # Expose mainnet ports (server, rpc)
-EXPOSE 8333 8334
+EXPOSE 18333 18334
 
 # Copy the compiled binaries from the builder image.
 COPY --from=builder /go/bin/addblock /bin/

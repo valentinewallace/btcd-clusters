@@ -53,6 +53,8 @@ PARAMS=$(echo $PARAMS \
     "--rpckey=/rpc/rpc.key" \
     "--rpclisten=0.0.0.0" \
     "--txindex" \
+    "--profile=9096" \
+    "--maxpeers=1000" \
     "--agentblacklist=Cash,ABC"
 )
 

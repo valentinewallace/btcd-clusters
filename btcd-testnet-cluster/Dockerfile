@@ -11,9 +11,10 @@ WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 RUN git clone https://github.com/btcsuite/btcd.git \
     && cd btcd \
     && git remote add vmw https://github.com/valentinewallace/btcd.git \
-    && git fetch vmw btcd-mainnet-cluster \
-    && git checkout btcd-mainnet-cluster \
-    && GO111MODULE=on go install -v . ./cmd/...
+    && git fetch vmw vmw-mainnet-cluster \
+    && git checkout vmw-mainnet-cluster \
+    && GO111MODULE=on go mod vendor \
+    && GO111MODULE=on go install -v -mod=vendor . ./cmd/...
 
 # Start a new image
 FROM alpine as final

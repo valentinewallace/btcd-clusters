@@ -1,6 +1,4 @@
-FROM golang:1.11-alpine as builder
-
-MAINTAINER Olaoluwa Osuntokun <laolu@lightning.network>
+FROM golang:1.11-alpine
 
 # Install build dependencies such as git and glide.
 RUN apk add --no-cache git gcc musl-dev
@@ -11,22 +9,13 @@ WORKDIR $GOPATH/src/github.com/btcsuite/btcd
 RUN git clone https://github.com/btcsuite/btcd.git \
     && cd btcd \
     && git remote add conner https://github.com/cfromknecht/btcd.git \
-    && git fetch conner stall-fixes \
-    && git checkout stall-fixes \
-    && GO111MODULE=on go install -v . ./cmd/...
+    && git fetch conner btcd-reborn \
+    && git checkout btcd-reborn \
+    && GO111MODULE=on go mod vendor \
+    && GO111MODULE=on go install -v -mod=vendor . ./cmd/...
 
-# Start a new image
-FROM alpine as final
-
-# Expose mainnet ports (server, rpc)
+# # Expose mainnet ports (server, rpc)
 EXPOSE 8333 8334
-
-# Copy the compiled binaries from the builder image.
-COPY --from=builder /go/bin/addblock /bin/
-COPY --from=builder /go/bin/btcctl /bin/
-COPY --from=builder /go/bin/btcd /bin/
-COPY --from=builder /go/bin/findcheckpoint /bin/
-COPY --from=builder /go/bin/gencerts /bin/
 
 COPY "start-btcctl.sh" .
 COPY "start-btcd.sh" .
@@ -40,7 +29,7 @@ RUN apk add --no-cache \
 &&  chmod +x start-btcd.sh \
 # Manually generate certificate and add all domains, it is needed to connect
 # "btcctl" and "lnd" to "btcd" over docker links.
-&& "/bin/gencerts" --host="*" --directory="/rpc" --force
+&& gencerts --host="*" --directory="/rpc" --force
 
 # Create a volume to house pregenerated RPC credentials. This will be
 # shared with any lnd, btcctl containers so they can securely query btcd's RPC
